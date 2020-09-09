@@ -1,9 +1,21 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-homepage:
-  path:     /
-  defaults: { _controller: App\Controller\SecurityController::registration }
-app:
-  resource: "@AppBundle/Controller/"
-  type:     annotation
+
+todolist_index:
+  path:     /index
+  defaults: { _controller: App\Controller\DefaultController::index }
+
+security_login:
+  path:     /login
+  defaults: { _controller: App\Controller\SecurityController::login }
+
+
+security_logout:
+  path:     /logout
+  defaults: { _controller: App\Controller\SecurityController::logout }
+
+
+todolist_usercreate:
+  path:     /usercreate
+  defaults: { _controller: App\Controller\SecurityController::usercreate }
