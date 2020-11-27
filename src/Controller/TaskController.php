@@ -15,22 +15,21 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks", name="task_list")
      */
-    public function listAction()
+    public function tasklist()
     {
         return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository('AppBundle:Task')->findAll()]);
     }
 
     /**
-     * @Route("/tasks/create", name="task_create")
+     * Création de TASK
      */
-    public function createAction(Request $request)
+    public function taskcreate(Request $request)
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
-
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $em->persist($task);
@@ -38,7 +37,7 @@ class TaskController extends AbstractController
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('todolist_tasklist');
         }
 
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);

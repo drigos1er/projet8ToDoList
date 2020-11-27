@@ -3,7 +3,7 @@
 #    controller: App\Controller\DefaultController::index
 
 todolist_index:
-  path:     /index
+  path:     /
   defaults: { _controller: App\Controller\DefaultController::index }
 
 security_login:
@@ -18,4 +18,30 @@ security_logout:
 
 todolist_usercreate:
   path:     /usercreate
-  defaults: { _controller: App\Controller\SecurityController::usercreate }
+  defaults: { _controller: App\Controller\UserController::usercreate }
+
+
+
+
+todolist_useredit:
+  path:     /useredit
+  defaults: { _controller: App\Controller\UserController::useredit }
+
+
+
+todolist_userlist:
+  path:     /userlist
+  defaults: { _controller: App\Controller\UserController::userlist }
+
+
+
+
+todolist_taskcreate:
+  path:     /taskcreate
+  defaults: { _controller: App\Controller\TaskController::taskcreate }
+
+
+
+todolist_tasklist:
+  path:     /tasklist
+  defaults: { _controller: App\Controller\TaskController::tasklist }
