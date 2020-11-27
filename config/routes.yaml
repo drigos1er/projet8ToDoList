@@ -16,32 +16,47 @@ security_logout:
   defaults: { _controller: App\Controller\SecurityController::logout }
 
 
-todolist_usercreate:
-  path:     /usercreate
-  defaults: { _controller: App\Controller\UserController::usercreate }
+todolist_createuser:
+  path:     /createuser
+  defaults: { _controller: App\Controller\UserController::createUser }
 
 
 
 
-todolist_useredit:
-  path:     /useredit
-  defaults: { _controller: App\Controller\UserController::useredit }
+todolist_edituser:
+  path:     /edituser
+  defaults: { _controller: App\Controller\UserController::editUser }
 
 
 
-todolist_userlist:
-  path:     /userlist
-  defaults: { _controller: App\Controller\UserController::userlist }
+todolist_listuser:
+  path:     /listuser
+  defaults: { _controller: App\Controller\UserController::listUser }
 
 
 
 
-todolist_taskcreate:
-  path:     /taskcreate
-  defaults: { _controller: App\Controller\TaskController::taskcreate }
+todolist_createtask:
+  path:     /createtask
+  defaults: { _controller: App\Controller\TaskController::createTask }
 
 
 
-todolist_tasklist:
-  path:     /tasklist
-  defaults: { _controller: App\Controller\TaskController::tasklist }
+todolist_listtask:
+  path:     /listtask
+  defaults: { _controller: App\Controller\TaskController::listTask }
+
+
+
+todolist_edittask:
+  path:     /edittask
+  defaults: { _controller: App\Controller\TaskController::editTask }
+
+
+todolist_toggletask:
+  path:     /toggletask/{id}
+  defaults: { _controller: App\Controller\TaskController::toggleTask }
+
+todolist_deletetask:
+  path:     /deletetask
+  defaults: { _controller: App\Controller\TaskController::deleteTask }

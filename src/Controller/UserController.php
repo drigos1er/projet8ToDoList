@@ -15,13 +15,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
 
-    public function userlist(UserRepository $userRepository)
+    public function listUser(UserRepository $userRepository)
     {
         return $this->render('user/list.html.twig', ['users' => $userRepository->findAll()]);
     }
 
 
-    public function usercreate(Request $request, UserPasswordEncoderInterface $encoder)
+    public function createUser(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -39,14 +39,14 @@ class UserController extends AbstractController
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
-            return $this->redirectToRoute('todolist_userlist');
+            return $this->redirectToRoute('todolist_listuser');
         }
 
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
 
-    public function editAction(User $user, Request $request)
+    public function editUser(User $user, Request $request)
     {
         $form = $this->createForm(UserType::class, $user);
 
