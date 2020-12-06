@@ -38,7 +38,7 @@
         <!-- Page Content -->
         <div class="container">
             <div class="row">
-                <a href="{{ path('todolist_usercreate') }}" class="btn btn-primary">Créer un utilisateur</a>
+                <a href="{{ path('todolist_createuser') }}" class="btn btn-primary">Créer un utilisateur</a>
 
                 {% if app.user %}
                 <a href="{{ path('security_logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
