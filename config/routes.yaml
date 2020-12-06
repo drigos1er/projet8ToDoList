@@ -17,20 +17,20 @@ security_logout:
 
 
 todolist_createuser:
-  path:     /createuser
+  path:     /userarea/createuser
   defaults: { _controller: App\Controller\UserController::createUser }
 
 
 
 
 todolist_edituser:
-  path:     /edituser
+  path:     /userarea/edituser/{id}
   defaults: { _controller: App\Controller\UserController::editUser }
 
 
 
 todolist_listuser:
-  path:     /listuser
+  path:     /userarea/listuser
   defaults: { _controller: App\Controller\UserController::listUser }
 
 
@@ -48,8 +48,21 @@ todolist_listtask:
 
 
 
+todolist_listtaskdone:
+  path:     /listtaskdone
+  defaults: { _controller: App\Controller\TaskController::listTaskdone }
+
+
+
+
+
+todolist_listtaskisnotdone:
+  path:     /listtaskisnotdone
+  defaults: { _controller: App\Controller\TaskController::listTaskisnotdone }
+
+
 todolist_edittask:
-  path:     /edittask
+  path:     /edittask/{id}
   defaults: { _controller: App\Controller\TaskController::editTask }
 
 
@@ -58,5 +71,5 @@ todolist_toggletask:
   defaults: { _controller: App\Controller\TaskController::toggleTask }
 
 todolist_deletetask:
-  path:     /deletetask
+  path:     /deletetask/{id}
   defaults: { _controller: App\Controller\TaskController::deleteTask }

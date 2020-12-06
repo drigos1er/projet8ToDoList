@@ -21,46 +21,115 @@ class UserController extends AbstractController
     }
 
 
-    public function createUser(Request $request, UserPasswordEncoderInterface $encoder)
+    public function createUser(Request $request, UserPasswordEncoderInterface $encoder,UserRepository $userRepository)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
 
-            $password=$encoder->encodePassword($user, $user->getPassword());
+          $userexists=$userRepository->findOneByUsername($form['username']->getData());
 
-            $user->setPassword($password);
+          if($userexists){
 
-            $em->persist($user);
-            $em->flush();
+              $this->addFlash('error', "ce nom d'utilisateur a dejà été utilisé.");
 
-            $this->addFlash('success', "L'utilisateur a bien été ajouté.");
+              return $this->redirectToRoute('todolist_createuser');
+          }else{
 
-            return $this->redirectToRoute('todolist_listuser');
+
+
+
+              $em = $this->getDoctrine()->getManager();
+
+              $password=$encoder->encodePassword($user, $user->getPassword());
+
+              $user->setPassword($password);
+
+              $em->persist($user);
+              $em->flush();
+
+
+              $lastid=$user->getId();
+
+
+
+              $sql = " REPLACE INTO to_do_role_user VALUES (:roleid,:userid)  ";
+              $params = array('roleid'=>$form['userrole']->getData() ,'userid'=>$lastid);
+
+              $em = $this->getDoctrine()->getManager();
+              $stmt = $em->getConnection()->prepare($sql);
+              $stmt->execute($params);
+
+
+
+
+              $this->addFlash('success', "L'utilisateur a bien été ajouté.");
+
+              return $this->redirectToRoute('todolist_listuser');
+          }
+
+
+
+
         }
 
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
 
-    public function editUser(User $user, Request $request)
+    public function editUser(User $user, Request $request, UserPasswordEncoderInterface $encoder,UserRepository $userRepository)
     {
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
-        if ($form->isValid()) {
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
 
-            $this->getDoctrine()->getManager()->flush();
 
-            $this->addFlash('success', "L'utilisateur a bien été modifié");
 
-            return $this->redirectToRoute('user_list');
+
+                $em = $this->getDoctrine()->getManager();
+
+                $password=$encoder->encodePassword($user, $user->getPassword());
+
+                $user->setPassword($password);
+
+                $em->persist($user);
+                $em->flush();
+
+
+                $lastid=$user->getId();
+
+
+
+                $sql = " REPLACE INTO to_do_role_user VALUES (:roleid,:userid)  ";
+                $params = array('roleid'=>$form['userrole']->getData() ,'userid'=>$lastid);
+
+                $em = $this->getDoctrine()->getManager();
+                $stmt = $em->getConnection()->prepare($sql);
+                $stmt->execute($params);
+
+
+
+
+                $this->addFlash('success', "L'utilisateur a bien été modifié");
+
+                return $this->redirectToRoute('todolist_listuser');
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
