@@ -21,6 +21,29 @@ class TaskController extends AbstractController
         return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findAll()]);
     }
 
+
+    /**
+     * Liste de TASK DONE
+     */
+    public function listTaskdone(TaskRepository $taskRepository)
+    {
+        return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findBy(array('isDone'=>1))]);
+    }
+
+
+
+
+    /**
+     * Liste de TASK IS NOT DONE
+     */
+    public function listTaskisnotdone(TaskRepository $taskRepository)
+    {
+        return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findBy(array('isDone'=>0))]);
+    }
+
+
+
+
     /**
      * Création de TASK
      */
@@ -58,13 +81,12 @@ class TaskController extends AbstractController
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
-
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('todolist_listtask');
         }
 
         return $this->render('task/edit.html.twig', [

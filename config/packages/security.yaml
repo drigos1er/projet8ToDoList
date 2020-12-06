@@ -40,6 +40,7 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/users, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/userarea, roles: ROLE_ADMIN }
 
 
     # - { path: ^/profile, roles: ROLE_USER }

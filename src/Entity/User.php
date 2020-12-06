@@ -41,15 +41,63 @@ class User implements UserInterface
      */
     private $email;
 
+
+
+    /**
+     * @ORM\Column(name="user_role",type="string", length=150, nullable=true)
+     */
+    private $userrole;
+
+    /**
+     * @return mixed
+     */
+    public function getUserrole()
+    {
+        return $this->userrole;
+    }
+
+    /**
+     * @param mixed $userrole
+     * @return User
+     */
+    public function setUserrole($userrole)
+    {
+        $this->userrole = $userrole;
+        return $this;
+    }
+
+
+
+
+
     /**
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="users")
      */
     private $tasks;
 
+
+
+
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ToDoRole", mappedBy="users")
+     */
+    private $todoRoles;
+
+
+
+
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
+        $this->todoRoles = new ArrayCollection();
     }
+
+
+
+
 
     public function getId()
     {
@@ -91,9 +139,22 @@ class User implements UserInterface
         $this->email = $email;
     }
 
+
+    /**
+     * @inheritDoc
+     */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        $roles=$this->todoRoles->map(function ($todoRoles) {
+
+            return $todoRoles->getTitle();
+        }
+        )->toArray();
+
+        $roles[]= 'ROLE_USER';
+
+        return $roles;
+
     }
 
     public function eraseCredentials()
@@ -126,6 +187,37 @@ class User implements UserInterface
             if ($task->getUsers() === $this) {
                 $task->setUsers(null);
             }
+        }
+
+        return $this;
+    }
+
+
+
+
+    /**
+     * @return Collection|ToDoRole[]
+     */
+    public function gettodoRoles(): Collection
+    {
+        return $this->todoRoles;
+    }
+
+    public function addtodoRole(ToDoRole $todoRole): self
+    {
+        if (!$this->todoRoles->contains($todoRole)) {
+            $this->todoRoles[] = $todoRole;
+            $todoRole->adduser($this);
+        }
+
+        return $this;
+    }
+
+    public function removetodoRole(ToDoRole $todoRole): self
+    {
+        if ($this->todoRoles->contains($todoRole)) {
+            $this->todoRoles->removeElement($todoRole);
+            $todoRole->removeuser($this);
         }
 
         return $this;

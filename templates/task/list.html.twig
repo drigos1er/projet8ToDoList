@@ -12,10 +12,17 @@
                     <h4 class="pull-right">
                         {% if task.isDone %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}
                     </h4>
-                    <h4><a href="{{ path('todolist_edittask', {'id' : task.id }) }}">{{ task.title }}</a></h4>
+                    {% if task.users.id==app.user.id%}   <h4><a href="{{ path('todolist_edittask', {'id' : task.id }) }}">{{ task.title }}</a></h4>{% else %} <h4><a href="#">{{ task.title }}</a></h4>{% endif %}
+
+
+
+
                     <p>{{ task.content }}</p>
+
+
                 </div>
                 <div>
+                    {% if task.users.id==app.user.id%}
                     <form action="{{ path('todolist_toggletask', {'id' : task.id }) }}">
                         <button class="btn btn-success btn-sm pull-right">
                             {% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée{% endif %}
@@ -24,6 +31,25 @@
                     <form action="{{ path('todolist_deletetask', {'id' : task.id }) }}">
                         <button class="btn btn-danger btn-sm pull-right">Supprimer</button>
                     </form>
+
+                    {% endif %}
+
+
+                    {% if task.users.id== 2 and app.user.userrole== 1 %}
+                        <form action="{{ path('todolist_toggletask', {'id' : task.id }) }}">
+                            <button class="btn btn-success btn-sm pull-right">
+                                {% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée{% endif %}
+                            </button>
+                        </form>
+                        <form action="{{ path('todolist_deletetask', {'id' : task.id }) }}">
+                            <button class="btn btn-danger btn-sm pull-right">Supprimer</button>
+                        </form>
+
+                    {% endif %}
+
+
+
+
                 </div>
             </div>
         </div>
