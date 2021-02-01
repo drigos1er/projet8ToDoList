@@ -2,50 +2,50 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends AbstractController
 {
     /**
-     * Liste de TASK
+     * Liste de TASK.
+     *
+     * @param TaskRepository $taskRepository
+     * @return Response
      */
     public function listTask(TaskRepository $taskRepository)
     {
         return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findAll()]);
     }
 
-
     /**
-     * Liste de TASK DONE
+     * Liste de TASK DONE.
+     *
+     * @param TaskRepository $taskRepository
+     * @return Response
      */
     public function listTaskdone(TaskRepository $taskRepository)
     {
-        return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findBy(array('isDone'=>1))]);
+        return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findBy(['isDone' => 1])]);
     }
 
-
-
-
     /**
-     * Liste de TASK IS NOT DONE
+     * Liste de TASK IS NOT DONE.
+     *
+     * @param TaskRepository $taskRepository
+     * @return Response
      */
     public function listTaskisnotdone(TaskRepository $taskRepository)
     {
-        return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findBy(array('isDone'=>0))]);
+        return $this->render('task/list.html.twig', ['tasks' => $taskRepository->findBy(['isDone' => 0])]);
     }
 
-
-
-
     /**
-     * Création de TASK
+     * Création de TASK.
      */
     public function createTask(Request $request)
     {
@@ -57,10 +57,6 @@ class TaskController extends AbstractController
             $em = $this->getDoctrine()->getManager();
 
             $task->setUsers($this->getUser());
-
-
-
-
 
             $em->persist($task);
             $em->flush();
@@ -74,7 +70,7 @@ class TaskController extends AbstractController
     }
 
     /**
-     * EDIT TASK
+     * EDIT TASK.
      */
     public function editTask(Task $task, Request $request)
     {
@@ -96,7 +92,7 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Marquage de Task
+     * Marquage de Task.
      */
     public function toggleTask(Task $task)
     {
@@ -109,7 +105,7 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Delete Task
+     * Delete Task.
      */
     public function deleteTask(Task $task)
     {
