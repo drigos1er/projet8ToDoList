@@ -41,6 +41,7 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/users, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/userarea, roles: ROLE_ADMIN }
+        - { path: ^/taskarea, roles: [ROLE_ADMIN,ROLE_USER] }
 
 
     # - { path: ^/profile, roles: ROLE_USER }

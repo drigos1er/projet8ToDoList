@@ -37,19 +37,19 @@ todolist_listuser:
 
 
 todolist_createtask:
-  path:     /createtask
+  path:     /taskarea/createtask
   defaults: { _controller: App\Controller\TaskController::createTask }
 
 
 
 todolist_listtask:
-  path:     /listtask
+  path:     /taskarea/listtask
   defaults: { _controller: App\Controller\TaskController::listTask }
 
 
 
 todolist_listtaskdone:
-  path:     /listtaskdone
+  path:     /taskarea/listtaskdone
   defaults: { _controller: App\Controller\TaskController::listTaskdone }
 
 
@@ -57,19 +57,19 @@ todolist_listtaskdone:
 
 
 todolist_listtaskisnotdone:
-  path:     /listtaskisnotdone
+  path:     /taskarea/listtaskisnotdone
   defaults: { _controller: App\Controller\TaskController::listTaskisnotdone }
 
 
 todolist_edittask:
-  path:     /edittask/{id}
+  path:     /taskarea/edittask/{id}
   defaults: { _controller: App\Controller\TaskController::editTask }
 
 
 todolist_toggletask:
-  path:     /toggletask/{id}
+  path:    /taskarea/toggletask/{id}
   defaults: { _controller: App\Controller\TaskController::toggleTask }
 
 todolist_deletetask:
-  path:     /deletetask/{id}
+  path:     /taskarea/deletetask/{id}
   defaults: { _controller: App\Controller\TaskController::deleteTask }
