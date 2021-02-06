@@ -18,8 +18,17 @@ class TaskControllerTest extends WebTestCase
         $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
         $tasks = $em->getRepository(Task::class)->findAll();
         $clt->request('GET', '/taskarea/listtask', ['task' => $tasks]);
-        //  $clt->request('GET', $urlGenerator->generate("todolist_listtask",['tasks'=>$tasks]));
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+    }
+
+    public function testListTaskisRestricted()
+    {
+        $clt = static::createClient();
+        $clt->request('GET', '/taskarea/listtask');
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $clt->followRedirect();
+        $this->assertRouteSame('security_login');
     }
 
     public function testCreateTaskisRestricted()
@@ -46,7 +55,7 @@ class TaskControllerTest extends WebTestCase
     {
         $clt = static::createAuthenticatedUser();
         $crawler = $clt->request('GET', '/taskarea/createtask');
-        $f = $crawler->selectButton('Ajouter')->form(['task[title]' => 'tasksession', 'task[content]' => 'task session']);
+        $f = $crawler->selectButton('Ajouter')->form(['task[title]' => 'tasksession2', 'task[content]' => 'task session2']);
         $clt->submit($f);
         $this->assertResponseRedirects();
         $clt->followRedirect();
@@ -68,13 +77,12 @@ class TaskControllerTest extends WebTestCase
         $this->assertRouteSame('todolist_listtask');
     }
 
-/*
-        public function testEditTaskDenied()
-        {
-            $clt = static::createAuthenticatedUser();
-            $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
-            $user = $em->getRepository(User::class)->findOneById(1);
-            $task = $em->createQueryBuilder()
+    public function testEditTaskDenied()
+    {
+        $clt = static::createAuthenticatedUser();
+        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em->getRepository(User::class)->findOneById(1);
+        $task = $em->createQueryBuilder()
              ->select('t')
              ->from(Task::class, 't')
              ->where('t.users != :user')
@@ -83,16 +91,12 @@ class TaskControllerTest extends WebTestCase
              ->getQuery()
              ->getSingleResult()
             ;
-
-
-            $clt->request('GET', '/taskarea/edittask/'.$task->getId().'');
-            $this->assertEquals(
-                403,
-                $clt->getResponse()->getStatusCode()
-            );
-        }
-
-*/
+        $clt->request('GET', '/taskarea/edittask/'.$task->getId().'');
+        $this->assertResponseRedirects();
+        $clt->followRedirect();
+        $this->assertRouteSame('todolist_listtask');
+        $this->assertSelectorTextContains('h1', "Desolè vous n'êtes pas autorisé à modifier cette tâche.");
+    }
 
     public function testDeleteTask()
     {
@@ -107,6 +111,27 @@ class TaskControllerTest extends WebTestCase
         $this->assertRouteSame('todolist_listtask');
     }
 
+    public function testDeleteTaskDenied()
+    {
+        $clt = static::createAuthenticatedUser();
+        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em->getRepository(User::class)->findOneById(1);
+      $task = $em->createQueryBuilder()
+            ->select('t')
+            ->from(Task::class, 't')
+            ->where('t.users != :user')
+            ->setParameter('user', $user->getId())
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult()
+        ;
+        $clt->request('GET', '/taskarea/deletetask/'.$task->getId().'');
+        $this->assertResponseRedirects();
+        $clt->followRedirect();
+        $this->assertRouteSame('todolist_listtask');
+        $this->assertSelectorTextContains('h1', "Desolè vous n'êtes pas autorisé à supprimer cette tâche.");
+    }
+
     public function testToggleTask()
     {
         $clt = static::createAuthenticatedUser();
@@ -119,8 +144,6 @@ class TaskControllerTest extends WebTestCase
         $clt->followRedirect();
         $this->assertRouteSame('todolist_listtask');
     }
-
-
 
     public function testListTaskisnotdone()
     {
@@ -137,9 +160,6 @@ class TaskControllerTest extends WebTestCase
         );
     }
 
-
-
-
     public function testListTaskdone()
     {
         $clt = static::createAuthenticatedUser();
@@ -154,18 +174,4 @@ class TaskControllerTest extends WebTestCase
             $clt->getResponse()->getStatusCode()
         );
     }
-
-    /*
-
-
-
-
-
-
-
-
-
-
-
-        */
 }

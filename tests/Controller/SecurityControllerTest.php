@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SecurityControllerTest extends WebTestCase
 {
-    use FixturesTrait;
+    //use FixturesTrait;
 
     public function testLoginPage()
     {
@@ -15,7 +15,6 @@ class SecurityControllerTest extends WebTestCase
         $clt->request('GET', '/login');
         $this->assertResponseStatusCodeSame(200);
     }
-/*
     public function testErrorLogin()
     {
         $clt = static::createClient();
@@ -29,14 +28,14 @@ class SecurityControllerTest extends WebTestCase
 
     public function testSuccessLogin()
     {
-        $this->loadFixtureFiles([dirname(__DIR__).'/Fixtures/users.yaml']);
+     //   $this->loadFixtureFiles([dirname(__DIR__).'/Fixtures/users.yaml']);
         $clt = static::createClient();
         $crawler = $clt->request('GET', '/login');
         $f = $crawler->selectButton('Se connecter')->form(['_username' => 'usert2', '_password' => 'usert']);
         $clt->submit($f);
         $this->assertResponseRedirects();
-i        $clt->followRedirect();
+        $clt->followRedirect();
         $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !");
     }
-*/
+
 }

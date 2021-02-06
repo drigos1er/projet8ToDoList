@@ -14,7 +14,6 @@ class TaskController extends AbstractController
     /**
      * Liste de TASK.
      *
-     * @param TaskRepository $taskRepository
      * @return Response
      */
     public function listTask(TaskRepository $taskRepository)
@@ -25,7 +24,6 @@ class TaskController extends AbstractController
     /**
      * Liste de TASK DONE.
      *
-     * @param TaskRepository $taskRepository
      * @return Response
      */
     public function listTaskdone(TaskRepository $taskRepository)
@@ -36,7 +34,6 @@ class TaskController extends AbstractController
     /**
      * Liste de TASK IS NOT DONE.
      *
-     * @param TaskRepository $taskRepository
      * @return Response
      */
     public function listTaskisnotdone(TaskRepository $taskRepository)
@@ -72,8 +69,18 @@ class TaskController extends AbstractController
     /**
      * EDIT TASK.
      */
-    public function editTask(Task $task, Request $request)
+    public function editTask(Request $request, $id, TaskRepository $taskRepository)
     {
+        $task = $taskRepository->findOneById($id);
+
+        if ($this->getUser()->getId() != $task->getUsers()->getId()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('error', 'Desolè vous n\'êtes pas autorisé à modifier cette tâche.');
+
+            return $this->redirectToRoute('todolist_listtask');
+        }
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -107,14 +114,31 @@ class TaskController extends AbstractController
     /**
      * Delete Task.
      */
-    public function deleteTask(Task $task)
+    public function deleteTask(TaskRepository $taskRepository, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
 
-        $this->addFlash('success', 'La tâche a bien été supprimée.');
 
-        return $this->redirectToRoute('todolist_listtask');
+        $task = $taskRepository->findOneById($id);
+
+        if ($this->getUser()->getId() != $task->getUsers()->getId()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('error', 'Desolè vous n\'êtes pas autorisé à supprimer cette tâche.');
+
+            return $this->redirectToRoute('todolist_listtask');
+        }else{
+
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($task);
+            $em->flush();
+
+            $this->addFlash('success', 'La tâche a bien été supprimée.');
+
+            return $this->redirectToRoute('todolist_listtask');
+        }
+
+
+
+
     }
 }

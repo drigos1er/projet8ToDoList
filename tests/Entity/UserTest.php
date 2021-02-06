@@ -12,12 +12,11 @@ class UserTest extends KernelTestCase
 
     public function testCreateUserValid()
     {
-        //   $this->loadFixtureFiles([dirname(__DIR__).'/Fixtures/users.yaml']);
 
         $usert = new User();
-        $usert->setPassword('usert');
-        $usert->setUsername('usert3');
-        $usert->setEmail('usert3@test.ci');
+        $usert->setPassword('usert9');
+        $usert->setUsername('usert9');
+        $usert->setEmail('usert9@test.ci');
         $usert->setUserrole('2');
         self::bootKernel();
         $error = self::$container->get('validator')->validate($usert);

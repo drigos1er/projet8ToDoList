@@ -11,22 +11,6 @@ class UserControllerTest extends WebTestCase
 {
     use AutTrait;
 
-    /*
-        public function testAuthIsRequiredForCreateUser()
-        {
-            $clt = static::createClient();
-            $clt->request('GET', '/userarea/createuser');
-            $this->assertResponseRedirects();
-        }
-
-        public function testAuthIsRequiredForListUser()
-        {
-            $clt = static::createClient();
-            $clt->request('GET', '/userarea/listuser');
-            $this->assertResponseRedirects();
-        }
-
-    */
 
     public function testListUser()
     {
@@ -37,6 +21,30 @@ class UserControllerTest extends WebTestCase
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
+
+
+
+    public function testListUserRestricted()
+    {
+        $clt = static::createClient();
+        $clt->request('GET', '/userarea/listuser');
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $clt->followRedirect();
+        $this->assertRouteSame('security_login');
+    }
+
+    public function testCreateUserisRestricted()
+    {
+        $clt = static::createClient();
+        $clt->request('GET', '/userarea/createuser');
+        $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        $clt->followRedirect();
+        $this->assertRouteSame('security_login');
+    }
+
+
+
 
     public function testCreateUser()
     {
@@ -55,20 +63,22 @@ class UserControllerTest extends WebTestCase
         $this->assertRouteSame('todolist_listuser');
     }
 
+
+
     public function testEditUser()
     {
         $clt = static::createAuthenticatedUser();
         $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
 
-        $user = $em->getRepository(User::class)->findOneById(3);
+        $user = $em->getRepository(User::class)->findOneById(2);
 
         $crawler = $clt->request('GET', '/userarea/edituser/'.$user->getId().'');
         $f = $crawler->selectButton('Modifier')->form();
-        $f['user[username]'] = 'user4';
-        $f['user[password][first]'] = 'user4';
-        $f['user[password][second]'] = 'user4';
+        $f['user[username]'] = 'user7';
+        $f['user[password][first]'] = 'user7';
+        $f['user[password][second]'] = 'user7';
         $f['user[email]'] = 'user4@ci.ci';
-        $f['user[userrole]'] = '1';
+        $f['user[userrole]'] = '2';
         $clt->submit($f);
         $this->assertResponseRedirects();
         $clt->followRedirect();

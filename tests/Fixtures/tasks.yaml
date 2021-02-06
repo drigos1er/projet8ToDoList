@@ -1,7 +1,7 @@
 App\Entity\Task:
   task_task:
-    title: "task1"
-    content: "task1 test"
+    title: "task2"
+    content: "task2 test"
     createdAt: "2018-07-27 11:51:00"
     users: 1
 

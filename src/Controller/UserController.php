@@ -16,7 +16,7 @@ class UserController extends AbstractController
         return $this->render('user/list.html.twig', ['users' => $userRepository->findAll()]);
     }
 
-    public function createUser(Request $request, UserPasswordEncoderInterface $encoder, UserRepository $userRepository)
+    public function createUser(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -51,8 +51,9 @@ class UserController extends AbstractController
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
-    public function editUser(User $user, Request $request, UserPasswordEncoderInterface $encoder, UserRepository $userRepository)
+    public function editUser(User $user, Request $request, UserPasswordEncoderInterface $encoder)
     {
+
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
