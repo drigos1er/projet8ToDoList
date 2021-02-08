@@ -55,8 +55,8 @@ class TaskControllerTest extends WebTestCase
     {
         $clt = static::createAuthenticatedUser();
         $crawler = $clt->request('GET', '/taskarea/createtask');
-        $f = $crawler->selectButton('Ajouter')->form(['task[title]' => 'tasksession2', 'task[content]' => 'task session2']);
-        $clt->submit($f);
+        $form = $crawler->selectButton('Ajouter')->form(['task[title]' => 'tasksession2', 'task[content]' => 'task session2']);
+        $clt->submit($form);
         $this->assertResponseRedirects();
         $clt->followRedirect();
         $this->assertRouteSame('todolist_listtask');
@@ -70,8 +70,8 @@ class TaskControllerTest extends WebTestCase
         $task = $em->getRepository(Task::class)->findOneBy(['users' => $user->getId()]);
 
         $crawler = $clt->request('GET', '/taskarea/edittask/'.$task->getId().'');
-        $f = $crawler->selectButton('Modifier')->form(['task[title]' => 'task1ses', 'task[content]' => 'task testses']);
-        $clt->submit($f);
+        $form = $crawler->selectButton('Modifier')->form(['task[title]' => 'task1ses', 'task[content]' => 'task testses']);
+        $clt->submit($form);
         $this->assertResponseRedirects();
         $clt->followRedirect();
         $this->assertRouteSame('todolist_listtask');

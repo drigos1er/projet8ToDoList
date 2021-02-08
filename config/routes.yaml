@@ -62,14 +62,14 @@ todolist_listtaskisnotdone:
 
 
 todolist_edittask:
-  path:     /taskarea/edittask/{id}
+  path:     /taskarea/edittask/{taskid}
   defaults: { _controller: App\Controller\TaskController::editTask }
 
 
 todolist_toggletask:
-  path:    /taskarea/toggletask/{id}
+  path:    /taskarea/toggletask/{taskid}
   defaults: { _controller: App\Controller\TaskController::toggleTask }
 
 todolist_deletetask:
-  path:     /taskarea/deletetask/{id}
+  path:     /taskarea/deletetask/{taskid}
   defaults: { _controller: App\Controller\TaskController::deleteTask }

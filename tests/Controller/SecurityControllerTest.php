@@ -19,8 +19,8 @@ class SecurityControllerTest extends WebTestCase
     {
         $clt = static::createClient();
         $crawler = $clt->request('GET', '/login');
-        $f = $crawler->selectButton('Se connecter')->form(['_username' => 'usert2', '_password' => 'usert2']);
-        $clt->submit($f);
+        $form = $crawler->selectButton('Se connecter')->form(['_username' => 'usert2', '_password' => 'usert2']);
+        $clt->submit($form);
         $this->assertResponseRedirects();
         $clt->followRedirect();
         $this->assertSelectorExists('.alert.alert-danger');
@@ -31,8 +31,8 @@ class SecurityControllerTest extends WebTestCase
      //   $this->loadFixtureFiles([dirname(__DIR__).'/Fixtures/users.yaml']);
         $clt = static::createClient();
         $crawler = $clt->request('GET', '/login');
-        $f = $crawler->selectButton('Se connecter')->form(['_username' => 'usert2', '_password' => 'usert']);
-        $clt->submit($f);
+        $form = $crawler->selectButton('Se connecter')->form(['_username' => 'usert2', '_password' => 'usert']);
+        $clt->submit($form);
         $this->assertResponseRedirects();
         $clt->followRedirect();
         $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !");
