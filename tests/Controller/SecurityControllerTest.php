@@ -2,19 +2,23 @@
 
 namespace App\Tests\Controller;
 
-use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SecurityControllerTest extends WebTestCase
 {
-    //use FixturesTrait;
-
+    /**
+     * Login page display test.
+     */
     public function testLoginPage()
     {
         $clt = static::createClient();
         $clt->request('GET', '/login');
         $this->assertResponseStatusCodeSame(200);
     }
+
+    /**
+     * error credential test.
+     */
     public function testErrorLogin()
     {
         $clt = static::createClient();
@@ -26,9 +30,11 @@ class SecurityControllerTest extends WebTestCase
         $this->assertSelectorExists('.alert.alert-danger');
     }
 
+    /**
+     * correct credentials test.
+     */
     public function testSuccessLogin()
     {
-     //   $this->loadFixtureFiles([dirname(__DIR__).'/Fixtures/users.yaml']);
         $clt = static::createClient();
         $crawler = $clt->request('GET', '/login');
         $form = $crawler->selectButton('Se connecter')->form(['_username' => 'usert2', '_password' => 'usert']);
@@ -37,5 +43,4 @@ class SecurityControllerTest extends WebTestCase
         $clt->followRedirect();
         $this->assertSelectorTextContains('h1', "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !");
     }
-
 }

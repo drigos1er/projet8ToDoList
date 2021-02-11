@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class TodoRoleRepositoryTest extends KernelTestCase
 {
+    /**
+     * Count todorole test.
+     */
     public function testCountTodoRole()
     {
         self::bootKernel();

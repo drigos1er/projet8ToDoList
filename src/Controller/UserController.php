@@ -6,16 +6,30 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
+    /**
+     * user list.
+     *
+     * @return Response
+     */
     public function listUser(UserRepository $userRepository)
     {
         return $this->render('user/list.html.twig', ['users' => $userRepository->findAll()]);
     }
 
+    /**
+     * Create a user.
+     *
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return RedirectResponse|Response
+     */
     public function createUser(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
@@ -23,25 +37,23 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $ems = $this->getDoctrine()->getManager();
 
+            $passwords = $encoder->encodePassword($user, $user->getPassword());
 
-            $em = $this->getDoctrine()->getManager();
+            $user->setPassword($passwords);
 
-            $password = $encoder->encodePassword($user, $user->getPassword());
+            $ems->persist($user);
+            $ems->flush();
 
-            $user->setPassword($password);
+            $lastids = $user->getId();
 
-            $em->persist($user);
-            $em->flush();
+            $sqls = ' REPLACE INTO to_do_role_user VALUES (:roleid,:userid)  ';
+            $paramss = ['roleid' => $form['userrole']->getData(), 'userid' => $lastids];
 
-            $lastid = $user->getId();
-
-            $sql = ' REPLACE INTO to_do_role_user VALUES (:roleid,:userid)  ';
-            $params = ['roleid' => $form['userrole']->getData(), 'userid' => $lastid];
-
-            $em = $this->getDoctrine()->getManager();
-            $stmt = $em->getConnection()->prepare($sql);
-            $stmt->execute($params);
+            $ems = $this->getDoctrine()->getManager();
+            $stmts = $ems->getConnection()->prepare($sqls);
+            $stmts->execute($paramss);
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
@@ -51,9 +63,16 @@ class UserController extends AbstractController
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
+    /**
+     * User edit.
+     *
+     * @param User $user
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return RedirectResponse|Response
+     */
     public function editUser(User $user, Request $request, UserPasswordEncoderInterface $encoder)
     {
-
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);

@@ -6,13 +6,14 @@ use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends AbstractController
 {
     /**
-     * Liste de TASK.
+     * task list.
      *
      * @return Response
      */
@@ -22,7 +23,7 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Liste de TASK DONE.
+     * task list done.
      *
      * @return Response
      */
@@ -32,7 +33,7 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Liste de TASK IS NOT DONE.
+     * task list not done.
      *
      * @return Response
      */
@@ -42,7 +43,9 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Création de TASK.
+     * Create a task.
+     *
+     * @return RedirectResponse|Response
      */
     public function createTask(Request $request)
     {
@@ -67,7 +70,11 @@ class TaskController extends AbstractController
     }
 
     /**
-     * EDIT TASK.
+     * edit task.
+     *
+     * @param $taskid
+     *
+     * @return RedirectResponse|Response
      */
     public function editTask(Request $request, $taskid, TaskRepository $taskRepository)
     {
@@ -99,20 +106,30 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Marquage de Task.
+     * mark task  done.
+     *
+     * @param $taskid
+     *
+     * @return RedirectResponse
      */
-    public function toggleTask(Task $task)
+    public function toggleTask(TaskRepository $taskRepo, $taskid)
     {
+        $task = $taskRepo->findOneById($taskid);
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
 
-        $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
+        $this->addFlash('success', sprintf('La tâche %s a bien été marquée.', $task->getTitle()));
 
         return $this->redirectToRoute('todolist_listtask');
     }
 
     /**
      * Delete Task.
+     *
+     * @param TaskRepository $taskRepository
+     * @param $taskid
+     *
+     * @return RedirectResponse
      */
     public function deleteTask(TaskRepository $taskRepository, $taskid)
     {

@@ -3,16 +3,15 @@
 namespace App\Tests\Entity;
 
 use App\Entity\User;
-use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class UserTest extends KernelTestCase
 {
-
-
+    /**
+     * Validation adding user test.
+     */
     public function testCreateUserValid()
     {
-
         $usert = new User();
         $usert->setPassword('usert9');
         $usert->setUsername('usert9');

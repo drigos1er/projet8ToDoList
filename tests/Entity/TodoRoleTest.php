@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class TodoRoleTest extends KernelTestCase
 {
+    /**
+     * Validation adding todorole test.
+     */
     public function testAddTodoRole()
     {
         $todorole = new ToDoRole();

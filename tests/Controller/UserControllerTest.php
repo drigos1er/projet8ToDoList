@@ -11,7 +11,9 @@ class UserControllerTest extends WebTestCase
 {
     use AutTrait;
 
-
+    /**
+     * List users page test.
+     */
     public function testListUser()
     {
         $clt = static::createAuthenticatedUser();
@@ -22,8 +24,9 @@ class UserControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
-
-
+    /**
+     * Restricted access to the user list test.
+     */
     public function testListUserRestricted()
     {
         $clt = static::createClient();
@@ -34,6 +37,9 @@ class UserControllerTest extends WebTestCase
         $this->assertRouteSame('security_login');
     }
 
+    /**
+     * Restricted access to create user test.
+     */
     public function testCreateUserisRestricted()
     {
         $clt = static::createClient();
@@ -43,19 +49,19 @@ class UserControllerTest extends WebTestCase
         $this->assertRouteSame('security_login');
     }
 
-
-
-
+    /**
+     * Create user test.
+     */
     public function testCreateUser()
     {
         $clt = static::createAuthenticatedUser();
         $crawler = $clt->request('GET', '/userarea/createuser');
 
         $f = $crawler->selectButton('Ajouter')->form();
-        $f['user[username]'] = 'user5';
-        $f['user[password][first]'] = 'user5';
-        $f['user[password][second]'] = 'user5';
-        $f['user[email]'] = 'user5@ci.ci';
+        $f['user[username]'] = 'user8';
+        $f['user[password][first]'] = 'user8';
+        $f['user[password][second]'] = 'user8';
+        $f['user[email]'] = 'user8@ci.ci';
         $f['user[userrole]'] = '2';
         $clt->submit($f);
         $this->assertResponseRedirects();
@@ -63,8 +69,9 @@ class UserControllerTest extends WebTestCase
         $this->assertRouteSame('todolist_listuser');
     }
 
-
-
+    /**
+     * Edit user test.
+     */
     public function testEditUser()
     {
         $clt = static::createAuthenticatedUser();

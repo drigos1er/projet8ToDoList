@@ -3,12 +3,18 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    public function login(Request $request, AuthenticationUtils $authenticationUtils)
+    /**
+     * Login Page.
+     *
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
+     */
+    public function login(AuthenticationUtils $authenticationUtils)
     {
         return $this->render('security/login.html.twig', [
             'error' => $authenticationUtils->getLastAuthenticationError(),
@@ -17,14 +23,4 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    /*  public function loginCheck()
-      {
-          // This code is never executed.
-      }
-
-
-      public function logoutCheck()
-      {
-          // This code is never executed.
-      }*/
 }
