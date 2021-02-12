@@ -26,8 +26,6 @@ class UserController extends AbstractController
     /**
      * Create a user.
      *
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $encoder
      * @return RedirectResponse|Response
      */
     public function createUser(Request $request, UserPasswordEncoderInterface $encoder)
@@ -66,9 +64,6 @@ class UserController extends AbstractController
     /**
      * User edit.
      *
-     * @param User $user
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $encoder
      * @return RedirectResponse|Response
      */
     public function editUser(User $user, Request $request, UserPasswordEncoderInterface $encoder)
@@ -101,5 +96,34 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
+    }
+
+    /**
+     * Delete Task.
+     *
+     *
+     * @param $taskid
+     *
+     * @return RedirectResponse
+     */
+    public function deleteUser(UserRepository $userRepository, $userid)
+    {
+        $user = $userRepository->findOneById($userid);
+
+        if ('todoadm' == $user->getUsers()->getUsername()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('error', 'Desolè vous n\'êtes pas autorisé à supprimer cet utilisateur.');
+
+            return $this->redirectToRoute('todolist_listuser');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+
+        $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
+
+        return $this->redirectToRoute('todolist_listuser');
     }
 }
