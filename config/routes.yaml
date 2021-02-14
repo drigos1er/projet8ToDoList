@@ -24,8 +24,15 @@ todolist_createuser:
 
 
 todolist_edituser:
-  path:     /userarea/edituser/{id}
+  path:     /userarea/edituser/{userid}
   defaults: { _controller: App\Controller\UserController::editUser }
+
+
+
+
+todolist_deleteuser:
+  path:     /userarea/deleteuser/{userid}
+  defaults: { _controller: App\Controller\UserController::deleteUser }
 
 
 

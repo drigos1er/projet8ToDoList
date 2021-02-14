@@ -91,4 +91,48 @@ class UserControllerTest extends WebTestCase
         $clt->followRedirect();
         $this->assertRouteSame('todolist_listuser');
     }
+
+    /**
+     * Restricted access to delete user  test.
+     */
+    public function testEditUserDenied()
+    {
+        $clt = static::createAuthenticatedUser();
+        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em->getRepository(User::class)->findOneByUsername('todoadm');
+        $clt->request('GET', '/userarea/edituser/'.$user->getId().'');
+        $this->assertResponseRedirects();
+        $clt->followRedirect();
+        $this->assertRouteSame('todolist_listuser');
+        $this->assertSelectorTextContains('h1', "Desolè vous n'êtes pas autorisé à modifier cet utilisateur.");
+    }
+
+    /**
+     * Delete user test.
+     */
+    public function testDeleteUser()
+    {
+        $clt = static::createAuthenticatedUser();
+        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em->getRepository(User::class)->findOneById(17);
+        $crawler = $clt->request('GET', '/userarea/deleteuser/'.$user->getId().'');
+        $this->assertResponseRedirects();
+        $clt->followRedirect();
+        $this->assertRouteSame('todolist_listuser');
+    }
+
+    /**
+     * Restricted access to delete user  test.
+     */
+    public function testDeleteUserDenied()
+    {
+        $clt = static::createAuthenticatedUser();
+        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $em->getRepository(User::class)->findOneByUsername('todoadm');
+        $clt->request('GET', '/userarea/deleteuser/'.$user->getId().'');
+        $this->assertResponseRedirects();
+        $clt->followRedirect();
+        $this->assertRouteSame('todolist_listuser');
+        $this->assertSelectorTextContains('h1', "Desolè vous n'êtes pas autorisé à supprimer cet utilisateur.");
+    }
 }

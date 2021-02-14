@@ -22,14 +22,18 @@
                 </thead>
                 <tbody>
                 {% for user in users %}
+                    {% if user.username!= 'todoadm' %}
                     <tr>
                         <th scope="row">{{ loop.index }}</th>
                         <td>{{ user.username }}</td>
                         <td>{{ user.email }}</td>
                         <td>
-                            <a href="{{ path('todolist_edituser', {'id' : user.id}) }}" class="btn btn-success btn-sm">Edit</a>
+
+                            <a href="{{ path('todolist_edituser', {'userid' : user.id}) }}" class="btn btn-success btn-sm">Modifier</a>   <a href="{{ path('todolist_deleteuser', {'userid' : user.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+
                         </td>
                     </tr>
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>

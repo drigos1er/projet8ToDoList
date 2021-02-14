@@ -66,8 +66,18 @@ class UserController extends AbstractController
      *
      * @return RedirectResponse|Response
      */
-    public function editUser(User $user, Request $request, UserPasswordEncoderInterface $encoder)
+    public function editUser(UserRepository $userRepository, $userid, Request $request, UserPasswordEncoderInterface $encoder)
     {
+        $user = $userRepository->findOneById($userid);
+
+        if ('todoadm' == $user->getUsername()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('error', 'Desolè vous n\'êtes pas autorisé à modifier cet utilisateur.');
+
+            return $this->redirectToRoute('todolist_listuser');
+        }
+
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
@@ -101,8 +111,7 @@ class UserController extends AbstractController
     /**
      * Delete Task.
      *
-     *
-     * @param $taskid
+     * @param $userid
      *
      * @return RedirectResponse
      */
@@ -110,7 +119,7 @@ class UserController extends AbstractController
     {
         $user = $userRepository->findOneById($userid);
 
-        if ('todoadm' == $user->getUsers()->getUsername()) {
+        if ('todoadm' == $user->getUsername()) {
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('error', 'Desolè vous n\'êtes pas autorisé à supprimer cet utilisateur.');
@@ -118,7 +127,21 @@ class UserController extends AbstractController
             return $this->redirectToRoute('todolist_listuser');
         }
 
+        $sql = ' DELETE FROM task WHERE users_id=:userid  ';
+        $params = ['userid' => $userid];
+
         $em = $this->getDoctrine()->getManager();
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute($params);
+
+        $sql1 = ' DELETE FROM to_do_role_user WHERE user_id=:userid  ';
+        $params1 = ['userid' => $userid];
+
+
+        $stmt1 = $em->getConnection()->prepare($sql1);
+        $stmt1->execute($params1);
+
+
         $em->remove($user);
         $em->flush();
 
