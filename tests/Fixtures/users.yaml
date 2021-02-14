@@ -1,8 +1,0 @@
-App\Entity\User:
-  user_user:
-    username: "usert2"
-    password: "\\$2y\\$10\\$eg0ufKNI6hoixxSDCiRr6.zZ1dFRCgEzKSQ7PCMzKmAnBjU8Rf6KG"
-    email: "usert2\\@test.ci"
-    userrole: "2"
-
-

@@ -6,15 +6,15 @@ use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends AbstractController
 {
     /**
-     * Liste de TASK.
+     * task list.
      *
-     * @param TaskRepository $taskRepository
      * @return Response
      */
     public function listTask(TaskRepository $taskRepository)
@@ -23,9 +23,8 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Liste de TASK DONE.
+     * task list done.
      *
-     * @param TaskRepository $taskRepository
      * @return Response
      */
     public function listTaskdone(TaskRepository $taskRepository)
@@ -34,9 +33,8 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Liste de TASK IS NOT DONE.
+     * task list not done.
      *
-     * @param TaskRepository $taskRepository
      * @return Response
      */
     public function listTaskisnotdone(TaskRepository $taskRepository)
@@ -45,7 +43,9 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Création de TASK.
+     * Create a task.
+     *
+     * @return RedirectResponse|Response
      */
     public function createTask(Request $request)
     {
@@ -70,10 +70,24 @@ class TaskController extends AbstractController
     }
 
     /**
-     * EDIT TASK.
+     * edit task.
+     *
+     * @param $taskid
+     *
+     * @return RedirectResponse|Response
      */
-    public function editTask(Task $task, Request $request)
+    public function editTask(Request $request, $taskid, TaskRepository $taskRepository)
     {
+        $task = $taskRepository->findOneById($taskid);
+
+        if ($this->getUser()->getId() != $task->getUsers()->getId()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('error', 'Desolè vous n\'êtes pas autorisé à modifier cette tâche.');
+
+            return $this->redirectToRoute('todolist_listtask');
+        }
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -92,23 +106,43 @@ class TaskController extends AbstractController
     }
 
     /**
-     * Marquage de Task.
+     * mark task  done.
+     *
+     * @param $taskid
+     *
+     * @return RedirectResponse
      */
-    public function toggleTask(Task $task)
+    public function toggleTask(TaskRepository $taskRepo, $taskid)
     {
+        $task = $taskRepo->findOneById($taskid);
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
 
-        $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
+        $this->addFlash('success', sprintf('La tâche %s a bien été marquée.', $task->getTitle()));
 
         return $this->redirectToRoute('todolist_listtask');
     }
 
     /**
      * Delete Task.
+     *
+     * @param TaskRepository $taskRepository
+     * @param $taskid
+     *
+     * @return RedirectResponse
      */
-    public function deleteTask(Task $task)
+    public function deleteTask(TaskRepository $taskRepository, $taskid)
     {
+        $task = $taskRepository->findOneById($taskid);
+
+        if ($this->getUser()->getId() != $task->getUsers()->getId()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('error', 'Desolè vous n\'êtes pas autorisé à supprimer cette tâche.');
+
+            return $this->redirectToRoute('todolist_listtask');
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();

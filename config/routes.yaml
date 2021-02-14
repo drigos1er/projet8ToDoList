@@ -24,8 +24,17 @@ todolist_createuser:
 
 
 todolist_edituser:
-  path:     /userarea/edituser/{id}
+  path:     /userarea/edituser/{userid}
   defaults: { _controller: App\Controller\UserController::editUser }
+
+
+
+
+todolist_deleteuser:
+  path:     /userarea/deleteuser/{userid}
+  defaults: { _controller: App\Controller\UserController::deleteUser }
+
+
 
 
 
@@ -48,6 +57,9 @@ todolist_listtask:
 
 
 
+
+
+
 todolist_listtaskdone:
   path:     /taskarea/listtaskdone
   defaults: { _controller: App\Controller\TaskController::listTaskdone }
@@ -62,14 +74,14 @@ todolist_listtaskisnotdone:
 
 
 todolist_edittask:
-  path:     /taskarea/edittask/{id}
+  path:     /taskarea/edittask/{taskid}
   defaults: { _controller: App\Controller\TaskController::editTask }
 
 
 todolist_toggletask:
-  path:    /taskarea/toggletask/{id}
+  path:    /taskarea/toggletask/{taskid}
   defaults: { _controller: App\Controller\TaskController::toggleTask }
 
 todolist_deletetask:
-  path:     /taskarea/deletetask/{id}
+  path:     /taskarea/deletetask/{taskid}
   defaults: { _controller: App\Controller\TaskController::deleteTask }
