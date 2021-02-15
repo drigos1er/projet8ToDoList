@@ -8,7 +8,7 @@ https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
 Cette application est une plateforme de gestion de tâches quotidienne .
 
 <ol>
-<li>Télécharger le projet sur : https://github.com/drigos1er/webserviceapi.git Le projet developpé sous symfony respecte l'architecture d'unn projet Symfony 4 selon l’organisation ci-dessous :
+<li>Télécharger le projet sur : https://github.com/drigos1er/projet8ToDoList.git . Le projet developpé sous symfony respecte l'architecture d'unn projet Symfony 4 :
 </li>
 <li>Preparation de l'environnement: Installer PHP 7.3, MySQL et le serveur Apache sur votre machine ou serveur et exécuter ces différents services</li>
 <li>Copier le dossier télécharger donc le dossier racine de votre environnement</li>
