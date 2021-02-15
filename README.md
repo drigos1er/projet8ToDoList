@@ -17,3 +17,5 @@ Cette application est une plateforme de gestion de tâches quotidienne .
 <li>Configurer les fichier .env et .env.test dans la section DATABASE_URL entrer les configuration d’accès à votre base de données.</li>
 <li>Vous pouvez accéder au projet à partir de l’adresse : [l’adresse de votre serveur ou localhost]/[webserviceapi].</li>
 </ol>
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/ca4c5bb06eb94a238fec8c5f0e0b0c97)](https://www.codacy.com/gh/drigos1er/projet8ToDoList/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=drigos1er/projet8ToDoList&amp;utm_campaign=Badge_Grade)
