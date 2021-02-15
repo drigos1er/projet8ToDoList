@@ -83,9 +83,9 @@ class TaskControllerTest extends WebTestCase
     public function testEditTask()
     {
         $clt = static::createAuthenticatedUser();
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em->getRepository(User::class)->findOneById(1);
-        $task = $em->getRepository(Task::class)->findOneBy(['users' => $user->getId()]);
+        $emse = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $emse->getRepository(User::class)->findOneById(1);
+        $task = $emse->getRepository(Task::class)->findOneBy(['users' => $user->getId()]);
 
         $crawler = $clt->request('GET', '/taskarea/edittask/'.$task->getId().'');
         $form = $crawler->selectButton('Modifier')->form(['task[title]' => 'task1ses3', 'task[content]' => 'task testses3']);
@@ -101,9 +101,9 @@ class TaskControllerTest extends WebTestCase
     public function testEditTaskDenied()
     {
         $clt = static::createAuthenticatedUser();
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em->getRepository(User::class)->findOneById(1);
-        $task = $em->createQueryBuilder()
+        $ems = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $ems->getRepository(User::class)->findOneById(1);
+        $task = $ems->createQueryBuilder()
              ->select('t')
              ->from(Task::class, 't')
              ->where('t.users != :user')
@@ -125,9 +125,9 @@ class TaskControllerTest extends WebTestCase
     public function testDeleteTask()
     {
         $clt = static::createAuthenticatedUser();
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em->getRepository(User::class)->findOneById(1);
-        $task = $em->getRepository(Task::class)->findOneBy(['users' => $user->getId()]);
+        $emta = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $emta->getRepository(User::class)->findOneById(1);
+        $task = $emta->getRepository(Task::class)->findOneBy(['users' => $user->getId()]);
 
         $clt->request('GET', '/taskarea/deletetask/'.$task->getId().'');
         $this->assertResponseRedirects();
@@ -165,9 +165,9 @@ class TaskControllerTest extends WebTestCase
     public function testToggleTask()
     {
         $clt = static::createAuthenticatedUser();
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em->getRepository(User::class)->findOneById(1);
-        $task = $em->getRepository(Task::class)->findOneBy(['users' => $user->getId(), 'isDone' => 0]);
+        $emt = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $emt->getRepository(User::class)->findOneById(1);
+        $task = $emt->getRepository(Task::class)->findOneBy(['users' => $user->getId(), 'isDone' => 0]);
 
         $clt->request('GET', '/taskarea/toggletask/'.$task->getId().'');
         $this->assertResponseRedirects();
@@ -182,9 +182,9 @@ class TaskControllerTest extends WebTestCase
     {
         $clt = static::createAuthenticatedUser();
 
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $emte = $clt->getContainer()->get('doctrine.orm.entity_manager');
 
-        $em->getRepository(Task::class)->findOneBy(['isDone' => 0]);
+        $emte->getRepository(Task::class)->findOneBy(['isDone' => 0]);
 
         $clt->request('GET', '/taskarea/listtaskisnotdone');
         $this->assertEquals(
@@ -200,9 +200,9 @@ class TaskControllerTest extends WebTestCase
     {
         $clt = static::createAuthenticatedUser();
 
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $emst = $clt->getContainer()->get('doctrine.orm.entity_manager');
 
-        $em->getRepository(Task::class)->findOneBy(['isDone' => 1]);
+        $emst->getRepository(Task::class)->findOneBy(['isDone' => 1]);
 
         $clt->request('GET', '/taskarea/listtaskdone');
         $this->assertEquals(
