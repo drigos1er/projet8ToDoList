@@ -27,4 +27,3 @@ Par aielleurs l'on peut egalement contribuer à l'amelioration du code par:
 </li>
 <li>La proposition ou l'amélioration de la documentation du projet</li>
 </ol>
-
