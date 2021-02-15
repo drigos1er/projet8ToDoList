@@ -13,9 +13,9 @@ class UserTest extends KernelTestCase
     public function testCreateUserValid()
     {
         $usert = new User();
-        $usert->setPassword('usert10');
-        $usert->setUsername('usert10');
-        $usert->setEmail('usert10@test.ci');
+        $usert->setPassword('usert11');
+        $usert->setUsername('usert11');
+        $usert->setEmail('usert11@test.ci');
         $usert->setUserrole('2');
         self::bootKernel();
         $error = self::$container->get('validator')->validate($usert);
