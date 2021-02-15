@@ -1,6 +1,7 @@
 ToDoList
 ========
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/84ec28a0fea44b398acfcc75a9209796)](https://app.codacy.com/gh/drigos1er/projet8ToDoList?utm_source=github.com&utm_medium=referral&utm_content=drigos1er/projet8ToDoList&utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/84ec28a0fea44b398acfcc75a9209796)](https://app.codacy.com/gh/drigos1er/projet8ToDoList?utm_source=github.com&utm_medium=referral&utm_content=drigos1er/projet8ToDoList&utm_campaign=Badge_Grade_Settings)
 
 Base du projet #8 : Améliorez un projet existant
