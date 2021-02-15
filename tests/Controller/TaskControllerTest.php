@@ -141,9 +141,9 @@ class TaskControllerTest extends WebTestCase
     public function testDeleteTaskDenied()
     {
         $clt = static::createAuthenticatedUser();
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em->getRepository(User::class)->findOneById(1);
-        $task = $em->createQueryBuilder()
+        $emnt = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $emnt->getRepository(User::class)->findOneById(1);
+        $task = $emnt->createQueryBuilder()
             ->select('t')
             ->from(Task::class, 't')
             ->where('t.users != :user')
