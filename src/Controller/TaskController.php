@@ -143,9 +143,9 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('todolist_listtask');
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
+        $emngt = $this->getDoctrine()->getManager();
+        $emngt->remove($task);
+        $emngt->flush();
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 

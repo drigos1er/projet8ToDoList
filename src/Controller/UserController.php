@@ -130,20 +130,20 @@ class UserController extends AbstractController
         $sql = ' DELETE FROM task WHERE users_id=:userid  ';
         $params = ['userid' => $userid];
 
-        $em = $this->getDoctrine()->getManager();
-        $stmt = $em->getConnection()->prepare($sql);
+        $entitym = $this->getDoctrine()->getManager();
+        $stmt = $entitym->getConnection()->prepare($sql);
         $stmt->execute($params);
 
         $sql1 = ' DELETE FROM to_do_role_user WHERE user_id=:userid  ';
         $params1 = ['userid' => $userid];
 
 
-        $stmt1 = $em->getConnection()->prepare($sql1);
+        $stmt1 = $entitym->getConnection()->prepare($sql1);
         $stmt1->execute($params1);
 
 
-        $em->remove($user);
-        $em->flush();
+        $entitym->remove($user);
+        $entitym->flush();
 
         $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
 
