@@ -18,11 +18,11 @@ Installer PHP 7.3, MySQL et le serveur Apache sur votre machine ou serveur et ex
 
 3- Copier le dossier télécharger donc le dossier racine de votre environnement
 
-4 -  Lancer l'installation et la mise à jour des composants grâce à composer
+4 -  Lancer l'installation et la mise à jour des composants grâce à composer 
 
-5- Créer les bases de donnée todolist_ db et todolisttest_ db à partir des fichiers de création des bases de données(todolist_ db.sql et todolisttest_ db.sql) situé à la racine du dossier.
+5- Créer les bases de donnée todolist_ db et todolisttest_ db à partir  doctrine:migrations:migrate
 
-6- Ouvrir les fichier .env et .env.test dans la section DATABASE_URL entrer les configuration d’accès à votre base de données.
+6- Configurer les fichier .env et .env.test dans la section DATABASE_URL entrer les configuration d’accès à votre base de données.
 
 7-Vous pouvez accéder au blog en à partir de l’adresse : [l’adresse de votre serveur ou localhost]/[webserviceapi]
 
