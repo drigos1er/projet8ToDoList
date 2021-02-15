@@ -98,8 +98,8 @@ class UserControllerTest extends WebTestCase
     public function testEditUserDenied()
     {
         $clt = static::createAuthenticatedUser();
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em->getRepository(User::class)->findOneByUsername('todoadm');
+        $entm = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $entm->getRepository(User::class)->findOneByUsername('todoadm');
         $clt->request('GET', '/userarea/edituser/'.$user->getId().'');
         $this->assertResponseRedirects();
         $clt->followRedirect();
@@ -113,8 +113,8 @@ class UserControllerTest extends WebTestCase
     public function testDeleteUser()
     {
         $clt = static::createAuthenticatedUser();
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em->getRepository(User::class)->findOneById(17);
+        $ema = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $ema->getRepository(User::class)->findOneById(17);
         $clt->request('GET', '/userarea/deleteuser/'.$user->getId().'');
         $this->assertResponseRedirects();
         $clt->followRedirect();
@@ -127,8 +127,8 @@ class UserControllerTest extends WebTestCase
     public function testDeleteUserDenied()
     {
         $clt = static::createAuthenticatedUser();
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em->getRepository(User::class)->findOneByUsername('todoadm');
+        $emng = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $emng->getRepository(User::class)->findOneByUsername('todoadm');
         $clt->request('GET', '/userarea/deleteuser/'.$user->getId().'');
         $this->assertResponseRedirects();
         $clt->followRedirect();
