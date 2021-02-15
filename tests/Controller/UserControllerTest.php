@@ -75,9 +75,9 @@ class UserControllerTest extends WebTestCase
     public function testEditUser()
     {
         $clt = static::createAuthenticatedUser();
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $emst = $clt->getContainer()->get('doctrine.orm.entity_manager');
 
-        $user = $em->getRepository(User::class)->findOneById(2);
+        $user = $emst->getRepository(User::class)->findOneById(2);
 
         $crawler = $clt->request('GET', '/userarea/edituser/'.$user->getId().'');
         $form = $crawler->selectButton('Modifier')->form();
