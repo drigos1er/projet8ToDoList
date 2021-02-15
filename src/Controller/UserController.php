@@ -82,22 +82,22 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $ema = $this->getDoctrine()->getManager();
 
             $password = $encoder->encodePassword($user, $user->getPassword());
 
             $user->setPassword($password);
 
-            $em->persist($user);
-            $em->flush();
+            $ema->persist($user);
+            $ema->flush();
 
             $lastid = $user->getId();
 
             $sql = ' REPLACE INTO to_do_role_user VALUES (:roleid,:userid)  ';
             $params = ['roleid' => $form['userrole']->getData(), 'userid' => $lastid];
 
-            $em = $this->getDoctrine()->getManager();
-            $stmt = $em->getConnection()->prepare($sql);
+            $ema = $this->getDoctrine()->getManager();
+            $stmt = $ema->getConnection()->prepare($sql);
             $stmt->execute($params);
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");

@@ -129,7 +129,7 @@ class TaskControllerTest extends WebTestCase
         $user = $em->getRepository(User::class)->findOneById(1);
         $task = $em->getRepository(Task::class)->findOneBy(['users' => $user->getId()]);
 
-        $crawler = $clt->request('GET', '/taskarea/deletetask/'.$task->getId().'');
+        $clt->request('GET', '/taskarea/deletetask/'.$task->getId().'');
         $this->assertResponseRedirects();
         $clt->followRedirect();
         $this->assertRouteSame('todolist_listtask');
@@ -169,7 +169,7 @@ class TaskControllerTest extends WebTestCase
         $user = $em->getRepository(User::class)->findOneById(1);
         $task = $em->getRepository(Task::class)->findOneBy(['users' => $user->getId(), 'isDone' => 0]);
 
-        $crawler = $clt->request('GET', '/taskarea/toggletask/'.$task->getId().'');
+        $clt->request('GET', '/taskarea/toggletask/'.$task->getId().'');
         $this->assertResponseRedirects();
         $clt->followRedirect();
         $this->assertRouteSame('todolist_listtask');
@@ -184,7 +184,7 @@ class TaskControllerTest extends WebTestCase
 
         $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
 
-        $task = $em->getRepository(Task::class)->findOneBy(['isDone' => 0]);
+        $em->getRepository(Task::class)->findOneBy(['isDone' => 0]);
 
         $clt->request('GET', '/taskarea/listtaskisnotdone');
         $this->assertEquals(
@@ -202,7 +202,7 @@ class TaskControllerTest extends WebTestCase
 
         $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
 
-        $task = $em->getRepository(Task::class)->findOneBy(['isDone' => 1]);
+        $em->getRepository(Task::class)->findOneBy(['isDone' => 1]);
 
         $clt->request('GET', '/taskarea/listtaskdone');
         $this->assertEquals(
