@@ -17,8 +17,8 @@ class UserControllerTest extends WebTestCase
     public function testListUser()
     {
         $clt = static::createAuthenticatedUser();
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
-        $users = $em->getRepository(User::class)->findAll();
+        $emt = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $users = $emt->getRepository(User::class)->findAll();
         $clt->request('GET', '/userarea/listuser', ['user' => $users]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
@@ -57,13 +57,13 @@ class UserControllerTest extends WebTestCase
         $clt = static::createAuthenticatedUser();
         $crawler = $clt->request('GET', '/userarea/createuser');
 
-        $f = $crawler->selectButton('Ajouter')->form();
-        $f['user[username]'] = 'user8';
-        $f['user[password][first]'] = 'user8';
-        $f['user[password][second]'] = 'user8';
-        $f['user[email]'] = 'user8@ci.ci';
-        $f['user[userrole]'] = '2';
-        $clt->submit($f);
+        $form = $crawler->selectButton('Ajouter')->form();
+        $form['user[username]'] = 'user8';
+        $form['user[password][first]'] = 'user8';
+        $form['user[password][second]'] = 'user8';
+        $form['user[email]'] = 'user8@ci.ci';
+        $form['user[userrole]'] = '2';
+        $clt->submit($form);
         $this->assertResponseRedirects();
         $clt->followRedirect();
         $this->assertRouteSame('todolist_listuser');
@@ -80,13 +80,13 @@ class UserControllerTest extends WebTestCase
         $user = $em->getRepository(User::class)->findOneById(2);
 
         $crawler = $clt->request('GET', '/userarea/edituser/'.$user->getId().'');
-        $f = $crawler->selectButton('Modifier')->form();
-        $f['user[username]'] = 'user7';
-        $f['user[password][first]'] = 'user7';
-        $f['user[password][second]'] = 'user7';
-        $f['user[email]'] = 'user4@ci.ci';
-        $f['user[userrole]'] = '2';
-        $clt->submit($f);
+        $form = $crawler->selectButton('Modifier')->form();
+        $form['user[username]'] = 'user7';
+        $form['user[password][first]'] = 'user7';
+        $form['user[password][second]'] = 'user7';
+        $form['user[email]'] = 'user4@ci.ci';
+        $form['user[userrole]'] = '2';
+        $clt->submit($form);
         $this->assertResponseRedirects();
         $clt->followRedirect();
         $this->assertRouteSame('todolist_listuser');
@@ -115,7 +115,7 @@ class UserControllerTest extends WebTestCase
         $clt = static::createAuthenticatedUser();
         $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
         $user = $em->getRepository(User::class)->findOneById(17);
-        $crawler = $clt->request('GET', '/userarea/deleteuser/'.$user->getId().'');
+        $clt->request('GET', '/userarea/deleteuser/'.$user->getId().'');
         $this->assertResponseRedirects();
         $clt->followRedirect();
         $this->assertRouteSame('todolist_listuser');

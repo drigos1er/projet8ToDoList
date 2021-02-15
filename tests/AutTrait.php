@@ -16,8 +16,8 @@ trait AutTrait
         $session = $clt->getContainer()->get('session');
 
         $firewall = 'main';
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $em->getRepository(User::class)->findOneById(1);
+        $emng = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $user = $emng->getRepository(User::class)->findOneById(1);
 
         $token = new UsernamePasswordToken($user, $user->getPassword(), $firewall, $user->getRoles());
         $session->set('_security_'.$firewall, serialize($token));
