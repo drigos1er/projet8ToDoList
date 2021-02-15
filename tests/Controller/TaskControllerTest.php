@@ -18,8 +18,8 @@ class TaskControllerTest extends WebTestCase
     public function testListTask()
     {
         $clt = static::createAuthenticatedUser();
-        $em = $clt->getContainer()->get('doctrine.orm.entity_manager');
-        $tasks = $em->getRepository(Task::class)->findAll();
+        $entm = $clt->getContainer()->get('doctrine.orm.entity_manager');
+        $tasks = $entm->getRepository(Task::class)->findAll();
         $clt->request('GET', '/taskarea/listtask', ['task' => $tasks]);
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
