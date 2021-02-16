@@ -9,8 +9,8 @@ Les développeurs peuvent contribuer au projet en suivant la procédure ci-desso
 * Créer ou proposer une fonctionalité (issue).
 * S'assigner cette issue.
 * Créer le test de cette fonctionnalité.
-* Réaliser le code nécessaire au bon fonctionnement du test (Controller,entité,Formulaire,template).
-* Créer les bases de donnée todolist_ db et todolisttest_ db à partir des migrations (doctrine:migrations:migrate).
+* Réaliser le code nécessaire au bon fonctionnement du test (Controller, entité, Formulaire, template).
+* Créer les bases de à partir des migrations (doctrine:migrations:migrate).
 * Réaliser un audit de la qualité et de la performance du code.
 * Faire un pull request de cette issue.
 -----------------
