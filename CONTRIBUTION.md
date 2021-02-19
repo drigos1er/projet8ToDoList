@@ -9,17 +9,17 @@ Les développeurs peuvent contribuer au projet en suivant la procédure ci-desso
 * Créer ou proposer une fonctionalité (issue).
 * S'assigner cette issue.
 * Créer le test de cette fonctionnalité.
-* Réaliser le code nécessaire au bon fonctionnement du test (Controller, entité, Formulaire, template).La mise en place des tests et fonctionalités corrigeants ces tests doit respecter les bonnes pratiques ci-dessous:
+* Réaliser le code nécessaire au bon fonctionnement du test (Controller, entité, Formulaire, template).La mise en place des tests et fonctionalités corrigeants ces tests doit respecter plusieurs  bonnes pratiques dont:
   * Utiliser les variables d'environnement dans le fichier env pour la configuration des infrastructures.
   * Utiliser des noms de paramètres courts et préfixés.
   * Utiliser l'Autowiring pour automatiser la configuration des services.
   * Utiliser des annotations pour définir entités doctrine.
   * Utiliser l'injection de dépendance pour obtenir des services.
   * Utiliser la notation Snake case pour les noms  des variables dans les vues.
-  * Définissez vos formulaires grâce à des classes PHP
-  * Tester vos routes ou liens
-  * S'assurer vous que votre contrôleur étende le contrôleur de base "AbstractController"
-  * Faire en sorte que votre code respecte les normes de codage PSR. Pour cela vous pouvez installer "PHP CS Fixer"
+  * Définissez vos formulaires grâce à des classes PHP.
+  * Tester vos routes ou Url.
+  * S'assurer vous que votre contrôleur étende le contrôleur de base "AbstractController".
+  * Faire en sorte que votre code respecte les normes de codage PSR. Pour cela vous pouvez installer "PHP CS Fixer".
 * S'assurer d'avoir un taux de couvertude d'au moins 70% de tests.
 * Réaliser un audit de la qualité (un badge de qualité A serait idéal) et de la performance du code.
 * Faire un pull request de cette issue.
