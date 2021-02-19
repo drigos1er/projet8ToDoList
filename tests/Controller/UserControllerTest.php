@@ -114,7 +114,7 @@ class UserControllerTest extends WebTestCase
     {
         $clt = static::createAuthenticatedUser();
         $ema = $clt->getContainer()->get('doctrine.orm.entity_manager');
-        $user = $ema->getRepository(User::class)->findOneById(17);
+        $user = $ema->getRepository(User::class)->findOneById(21);
         $clt->request('GET', '/userarea/deleteuser/'.$user->getId().'');
         $this->assertResponseRedirects();
         $clt->followRedirect();
