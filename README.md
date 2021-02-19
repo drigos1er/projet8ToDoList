@@ -15,7 +15,7 @@ Cette application est une plateforme de gestion de tâches quotidienne .
 <li>Renommer les fichier env.txt en env.test.txt respectivement en .env et .env.test</li>
 <li>Lancer l'installation et la mise à jour des composants grâce à composer</li>
 <li>Créer les bases de donnée todolist_ db et todolisttest_ db à partir des migrations (doctrine:migrations:migrate)</li>
-<li>Exécuter le script sql todoadm.sql présent dans le dossier config dans les deux bases de données</li>
+<li>Exécuter le script sql todoadm.sql du dossier config dans les deux bases de données todolist_ db et todolisttest_ db.</li>
 <li>Configurer les fichier .env et .env.test dans la section DATABASE_URL entrer les configuration d’accès à votre base de données.</li>
 <li>Vous pouvez accéder au projet à partir de l’adresse : [l’adresse de votre serveur ou localhost]/[projet8ToDoList].</li>
 </ol>
