@@ -9,7 +9,7 @@ Les développeurs peuvent contribuer au projet en suivant la procédure ci-desso
 * Créer ou proposer une fonctionalité (issue).
 * S'assigner cette issue.
 * Créer le test de cette fonctionnalité.
-* Réaliser le code nécessaire au bon fonctionnement du test (Controller, entité, Formulaire, template).La mise en place des tests et fonctionalités doit respecter plusieurs  bonnes pratiques àsavoir:
+* Réaliser le code nécessaire au bon fonctionnement du test (Controller, entité, Formulaire, template).La mise en place des tests et fonctionalités doit respecter les bonnes pratiques Symfony (https://symfony.com/doc/4.4/best_practices.html) en général et particulier les points ci-dessous:
   * Utiliser les variables d'environnement dans le fichier env pour la configuration des infrastructures.
   * Utiliser des noms de paramètres courts et préfixés.
   * Utiliser l'Autowiring pour automatiser la configuration des services.
