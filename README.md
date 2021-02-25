@@ -36,7 +36,7 @@ Créer les bases de donnée à partir des migrations.
 php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 ```
-Charger les données de bases à partir des fictures.
+Charger les données de bases à partir des fictures en mode DEV.
 ```sh
 php bin/console doctrine:fixtures:load
 ```
