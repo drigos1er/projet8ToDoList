@@ -18,7 +18,7 @@ Developpée avec le frameworrk PHP Symfony 4
 
 Télécharger le projet sur : https://github.com/drigos1er/projet8ToDoList.git.
 
-Installer PHP 7.3, MySQL 5.7 et Apache 2 sur votre machine ou serveur.
+Installer PHP 7.4, MySQL 5.7 et Apache 2 sur votre machine ou serveur.
 
 Exécuter tous ces services.
 
