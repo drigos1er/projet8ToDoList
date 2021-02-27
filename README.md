@@ -30,7 +30,7 @@ Lancer l'installation et la mise à jour des composants grâce à composer.
 composer update
 ```
 
-Créer les bases de donnée à partir des migrations.
+Créer les bases de donnée à partir des migrations en mod DEV.
 
 ```sh
 php bin/console make:migration
