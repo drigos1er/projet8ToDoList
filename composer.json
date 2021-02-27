@@ -58,6 +58,7 @@
 
     "config": { "preferred-install": {
         "*": "dist" },
+        "platform-check": false,
         "sort-packages": true },
 
 
