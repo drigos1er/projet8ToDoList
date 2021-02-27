@@ -22,6 +22,24 @@ class ToDoRole
     private $id;
 
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     * @return ToDoRole
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le titre ne doit pas être vide.")
      */
@@ -37,10 +55,7 @@ class ToDoRole
         $this->users = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+
 
     public function getTitle(): ?string
     {
